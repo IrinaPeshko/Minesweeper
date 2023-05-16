@@ -91,7 +91,8 @@ class Minesweeper {
 }
 
 const minesweeperPlay = new Minesweeper();
+let size = minesweeperPlay.size;
 minesweeperPlay.createGameboard();
 minesweeperPlay.createCells();
-const minesArr = createMines(100);
-onCellClick(minesArr);
+const minesArr = createMines(size); 
+onCellClick(minesArr, size);
