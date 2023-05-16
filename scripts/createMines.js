@@ -12,5 +12,5 @@ export function createMines (size) {
   const minesArr = [...Array(size).keys()]
   .sort(() => Math.random() - 0.5)
   .slice(0, minesCount)
-  console.log(minesArr);
+  return(minesArr);
 }

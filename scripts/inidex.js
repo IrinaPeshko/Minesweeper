@@ -1,4 +1,5 @@
 import { createMines } from "./createMines.js";
+import { onCellClick } from "./onCekllClick.js";
 const body = document.querySelector(".body");
 
 const container = document.createElement("div");
@@ -92,4 +93,5 @@ class Minesweeper {
 const minesweeperPlay = new Minesweeper();
 minesweeperPlay.createGameboard();
 minesweeperPlay.createCells();
-createMines(100)
+const minesArr = createMines(100);
+onCellClick(minesArr);
