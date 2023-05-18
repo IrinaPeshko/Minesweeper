@@ -49,10 +49,13 @@
   background-color:#f9ebee;
   height: 50px;
   width: 50px;
+  cursor: pointer;
 }
 
 .gameboard__cell_active{
   background-color:#fb8db1;
+  cursor:auto;
+
 }
 
 @media (max-width: 900px){
