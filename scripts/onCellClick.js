@@ -17,80 +17,51 @@ export function onCellClick(size) {
         event.target.innerHTML = "OK";
         for (let i = 0; i< minesArr.length; i++){
           let element = document.getElementById(`${minesArr[i]}`)
-          element.innerHTML = "OK"
+          element.innerHTML =
+            '<img src="./assets/1570429633bomb.svg" alt="bomb" class="cell__bomb">';
           element.classList.add("gameboard__cell_active");
           }
         } else {
-          let current = event.target     
-          count(current, boardWidth, minesArr)
+          let current = event.target 
+          const visitedCells = new Set();
+          const boardWidth = Math.sqrt(size)    
+          count(current, boardWidth, minesArr, visitedCells);
       }
 
     }
   })
   }
 
-  function count(current, boardWidth, minesArr){
-    let i = 0;
+  function count(current, boardWidth, minesArr, visited) {
     let currentId = +current.id;
-    if (minesArr.includes(currentId + 1)) {
-      i++;
+    visited.add(currentId);
+
+    let i = 0;
+    const directions = [-1, 0, 1];
+
+    for (let dy of directions) {
+      for (let dx of directions) {
+        if (dx === 0 && dy === 0) continue;
+        const neighborId = currentId + dx + dy * boardWidth;
+        if (minesArr.includes(neighborId)) i++;
+      }
     }
-    if (minesArr.includes(currentId - 1)) {
-      i++;
-    }
-    if (minesArr.includes(currentId + boardWidth)) {
-      i++;
-    }
-    if (minesArr.includes(currentId + boardWidth + 1)) {
-      i++;
-    }
-    if (minesArr.includes(currentId + boardWidth - 1)) {
-      i++;
-    }
-    if (minesArr.includes(currentId - boardWidth)) {
-      i++;
-    }
-    if (minesArr.includes(currentId - boardWidth - 1)) {
-      i++;
-    }
-    if (minesArr.includes(currentId - boardWidth + 1)) {
-      i++;
-    }
+
     current.innerText = i;
-    // currentId % boardWidth !== 0 || currentId === 0;
-    if(i === 0){
-      // добавить вызов функции для каждой клетки вокруг бомб
-      let newId = currentId+1;
-      let newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-      debugger
-      newId = currentId - 1;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
 
-      newId = currentId + boardWidth;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-
-      newId = currentId + boardWidth+1;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-
-      newId = currentId + boardWidth-1;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-
-      newId = currentId - boardWidth;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-
-      newId = currentId - boardWidth - 1;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
-
-      newId = currentId - boardWidth + 1;
-      newObject = document.getElementById(`${newId}`);
-      count(newObject, boardWidth, minesArr);
+    if (i === 0) {
+      current.innerText = "";
+      for (let dy of directions) {
+        for (let dx of directions) {
+          const neighborId = currentId + dx + dy * boardWidth;
+          if (dx === 0 && dy === 0) continue;
+          const neighborObject = document.getElementById(`${neighborId}`);
+          if (neighborObject && !visited.has(neighborId)) {
+            count(neighborObject, boardWidth, minesArr, visited);
+            neighborObject.classList.add("gameboard__cell_active"); // Добавление класса к открытой соседней ячейке
+          }
+        }
+      }
     }
-    return i
   }
+

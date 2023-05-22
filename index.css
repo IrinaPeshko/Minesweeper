@@ -58,6 +58,11 @@
 
 }
 
+.cell__bomb{
+  width: 70%;
+  background-color:transparent;
+}
+
 @media (max-width: 900px){
   .gameboard__cell{
     height: 40px;
