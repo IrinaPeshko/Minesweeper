@@ -1,7 +1,6 @@
 export function count(current, boardWidth, minesArr, visited) {
   let currentId = +current.id;
   visited.add(currentId);
-
   let i = 0;
   const directions = [-1, 0, 1];
 

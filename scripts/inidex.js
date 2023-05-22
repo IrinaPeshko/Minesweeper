@@ -58,6 +58,19 @@ const optionSizeHard = document.createElement("option");
 optionSizeHard.innerText = "Hard";
 optionSizeHard.setAttribute("value", "625");
 
+const popUp = document.createElement("div")
+popUp.className = "minesweeper__pop-up";
+
+const popUpText = document.createElement("h2");
+popUpText.className = 'pop-up__text';
+popUpText.innerText = 'Game Over!';
+
+const popUpCross = document.createElement("button")
+popUpCross.className="pop-up__cross";
+
+const crossImg = document.createElement("img")
+crossImg.setAttribute("src", "../assets/cross.svg");
+crossImg.setAttribute("alt", "cross");
 
 class Minesweeper {
   constructor() {
@@ -69,6 +82,10 @@ class Minesweeper {
       container.append(main);
       container.append(footer);
       main.append(gameboard);
+      gameboard.append(popUp);
+      popUp.append(popUpText);
+      popUp.append(popUpCross);
+      popUpCross.append(crossImg);
       footer.append(labelSound);
       footer.append(inputSoound);
       inputSoound.append(optionSoundOff);
@@ -95,3 +112,9 @@ let size = minesweeperPlay.size;
 minesweeperPlay.createGameboard();
 minesweeperPlay.createCells();
 onCellClick(size);
+
+const cross = document.querySelector(".pop-up__cross");
+ cross.addEventListener("click", () => {
+   const popUp = document.querySelector(".minesweeper__pop-up");
+   popUp.classList.remove("open");
+ });
