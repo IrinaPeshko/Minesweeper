@@ -14,7 +14,6 @@ export function onCellClick(size) {
     if (event.target.tagName === "BUTTON") {
       event.target.classList.add("gameboard__cell_active");
       if (minesArr.includes(+event.target.id)){
-        event.target.innerHTML = "OK";
         for (let i = 0; i< minesArr.length; i++){
           let element = document.getElementById(`${minesArr[i]}`)
           element.innerHTML =
@@ -43,6 +42,13 @@ export function onCellClick(size) {
       for (let dx of directions) {
         if (dx === 0 && dy === 0) continue;
         const neighborId = currentId + dx + dy * boardWidth;
+
+        // Проверяем, является ли текущая ячейка крайней левой ячейкой
+        if (currentId % boardWidth === 0 && dx === -1) continue;
+
+        // Проверяем, является ли текущая ячейка крайней правой ячейкой
+        if ((currentId + 1) % boardWidth === 0 && dx === 1) continue;
+
         if (minesArr.includes(neighborId)) i++;
       }
     }
@@ -55,13 +61,21 @@ export function onCellClick(size) {
         for (let dx of directions) {
           const neighborId = currentId + dx + dy * boardWidth;
           if (dx === 0 && dy === 0) continue;
+
+          // Проверяем, является ли текущая ячейка крайней левой ячейкой
+          if (currentId % boardWidth === 0 && dx === -1) continue;
+
+          // Проверяем, является ли текущая ячейка крайней правой ячейкой
+          if ((currentId + 1) % boardWidth === 0 && dx === 1) continue;
+
           const neighborObject = document.getElementById(`${neighborId}`);
           if (neighborObject && !visited.has(neighborId)) {
             count(neighborObject, boardWidth, minesArr, visited);
-            neighborObject.classList.add("gameboard__cell_active"); // Добавление класса к открытой соседней ячейке
+            neighborObject.classList.add("gameboard__cell_active");
           }
         }
       }
     }
   }
+
 

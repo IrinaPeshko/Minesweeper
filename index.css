@@ -55,7 +55,7 @@
 .gameboard__cell_active{
   background-color:#fb8db1;
   cursor:auto;
-
+  border: 1px solid #ff6d9e;
 }
 
 .cell__bomb{
