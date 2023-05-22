@@ -72,6 +72,7 @@ const crossImg = document.createElement("img")
 crossImg.setAttribute("src", "../assets/cross.svg");
 crossImg.setAttribute("alt", "cross");
 
+
 class Minesweeper {
   constructor() {
     this.size = localStorage.size ? localStorage.size : 100;
@@ -110,8 +111,10 @@ class Minesweeper {
 const minesweeperPlay = new Minesweeper();
 let size = minesweeperPlay.size;
 minesweeperPlay.createGameboard();
+let emptyCells = size - Math.sqrt(size);
+    console.log(emptyCells);
 minesweeperPlay.createCells();
-onCellClick(size);
+onCellClick(size, emptyCells);
 
 const cross = document.querySelector(".pop-up__cross");
  cross.addEventListener("click", () => {

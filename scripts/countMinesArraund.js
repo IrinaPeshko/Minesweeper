@@ -1,4 +1,19 @@
-export function count(current, boardWidth, minesArr, visited) {
+function count(current, boardWidth, minesArr, visited, emptyCells, gameEnded) {
+  const size = boardWidth*boardWidth
+  let newEmptyCells = emptyCells;
+  for (let i = 0; i<size;i++){
+    let cell = document.getElementById(`${i}`)
+    if(cell.classList.contains("gameboard__cell_active")){
+      newEmptyCells--;
+      if (newEmptyCells===0){
+        const popUp = document.querySelector(".minesweeper__pop-up");
+        popUp.classList.add("open");
+        const text = document.querySelector(".pop-up__text");
+        text.innerText = "You are a winner!";
+        gameEnded=true;
+      }
+    }
+  }
   let currentId = +current.id;
   visited.add(currentId);
   let i = 0;
@@ -36,7 +51,7 @@ export function count(current, boardWidth, minesArr, visited) {
 
         const neighborObject = document.getElementById(`${neighborId}`);
         if (neighborObject && !visited.has(neighborId)) {
-          count(neighborObject, boardWidth, minesArr, visited);
+          count(neighborObject, boardWidth, minesArr, visited, emptyCells, gameEnded);
           neighborObject.classList.add("gameboard__cell_active");
         }
       }
